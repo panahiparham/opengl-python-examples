@@ -1,0 +1,5 @@
+glfw @ https://download.lfd.uci.edu/pythonlibs/z2tqcw5k/glfw-2.0.0-cp39-cp39-win_amd64.whl
+numpy==1.19.4
+Pillow==8.0.1
+PyOpenGL @ https://download.lfd.uci.edu/pythonlibs/z2tqcw5k/PyOpenGL-3.1.5-cp39-cp39-win_amd64.whl
+PyOpenGL-accelerate @ https://download.lfd.uci.edu/pythonlibs/z2tqcw5k/PyOpenGL_accelerate-3.1.5-cp39-cp39-win_amd64.whl
