@@ -112,5 +112,8 @@ def main():
         glfw.poll_events()
 
 
+    glDeleteProgram(shader)
+
+
 if __name__=='__main__':
     main()
