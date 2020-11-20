@@ -5,6 +5,33 @@ import numpy
 
 import glfw
 
+def ParseShader(filepath):
+
+    vertexShader, fragmentShader = ('', '')
+    currentShader = None
+
+    with open(filepath, 'r') as src:
+        for line in src:
+            print(line, end='')
+
+            if '#shader' in line:
+                if 'vertex' in line:
+                    currentShader = 'vertex'
+                elif 'fragment' in line:
+                    currentShader = 'fragment'
+                else:
+                    raise ValueError('Wrong Shader Format!!!')
+            else:
+                if currentShader == 'vertex':
+                    vertexShader += line
+                elif currentShader == 'fragment':
+                    fragmentShader += line
+                else:
+                    raise ValueError('Wrong Shader Format!!!')
+
+        return vertexShader, fragmentShader
+
+
 
 def CompileShader(shaderType, source):
     source = [source]
@@ -71,33 +98,15 @@ def main():
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, positions.itemsize * 2, None)
 
     
-    vertexShader = '''
-    #version 330 core
 
-    layout(location = 0) in vec4 position;
-
-    void main()
-    {
-        gl_Position = position;
-    }
-
-    '''
-
-    fragmentShader = '''
-    #version 330 core
-
-    out vec4 color;
-
-    void main()
-    {
-        color = vec4(1.0, 0.0, 0.0, 1.0);
-    }
-
-    '''
+    # shader
+    vertexShader, fragmentShader = ParseShader('./cppRedo/Basic.shader')
 
     shader = CreateShader(vertexShader, fragmentShader)
 
     glUseProgram(shader)
+
+
 
 
     while not glfw.window_should_close(window):
@@ -112,7 +121,7 @@ def main():
         glfw.poll_events()
 
 
-    glDeleteProgram(shader)
+    # glDeleteProgram(shader)
 
 
 if __name__=='__main__':
