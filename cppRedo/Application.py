@@ -12,7 +12,6 @@ def ParseShader(filepath):
 
     with open(filepath, 'r') as src:
         for line in src:
-            print(line, end='')
 
             if '#shader' in line:
                 if 'vertex' in line:
@@ -84,10 +83,12 @@ def main():
 
 
 
+
     # vertex buffer
     positions = numpy.array([-0.5, -0.5,
-                              0.0,  0.5,
-                              0.5, -0.5], numpy.float32)
+                              0.5, -0.5,
+                              0.5,  0.5,
+                             -0.5,  0.5], numpy.float32)
 
 
     buffer = glGenBuffers(1)
@@ -97,7 +98,21 @@ def main():
     glEnableVertexAttribArray(0)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, positions.itemsize * 2, None)
 
+
+
+
+
+    # index buffer
+    indecies = numpy.array([0, 1, 2,
+                            2, 3, 0], numpy.uintc)
+
+    ibo = glGenBuffers(1)
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo)
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indecies.itemsize * len(indecies), indecies ,GL_STATIC_DRAW)
     
+
+
+
 
     # shader
     vertexShader, fragmentShader = ParseShader('./cppRedo/Basic.shader')
@@ -109,12 +124,15 @@ def main():
 
 
 
+
+
     while not glfw.window_should_close(window):
         glClear(GL_COLOR_BUFFER_BIT)
 
 
         # draw call
-        glDrawArrays(GL_TRIANGLES, 0, 3)
+        # glDrawArrays(GL_TRIANGLES, 0, 3)
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)
 
         glfw.swap_buffers(window)
 
